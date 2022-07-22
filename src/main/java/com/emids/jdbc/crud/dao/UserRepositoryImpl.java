@@ -2,9 +2,13 @@ package com.emids.jdbc.crud.dao;
 
 import com.emids.jdbc.crud.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -33,10 +37,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User getById(int id) {
-        return jdbcTemplate.queryForObject(GET_USER_BY_ID_QUERY, (rs, rowNum) -> {
-
-            return new User(rs.getInt("id"), rs.getString("fname"), rs.getString("lname"), rs.getString("email"));
-        },id);
+        return jdbcTemplate.queryForObject(GET_USER_BY_ID_QUERY, BeanPropertyRowMapper.newInstance(User.class), id);
     }
 
     @Override
@@ -47,8 +48,6 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> allUsers() {
-        return jdbcTemplate.query(GET_USERS_QUERY, (rs, rowNum) -> {
-            return new User(rs.getInt("id"), rs.getString("fname"), rs.getString("lname"), rs.getString("email"));
-        });
+        return jdbcTemplate.query(GET_USERS_QUERY, BeanPropertyRowMapper.newInstance(User.class));
     }
 }

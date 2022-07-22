@@ -7,11 +7,13 @@ import java.util.List;
 public interface UserRepository {
     User saveUser(User user);
 
-    User updateUser(User user);
+    List<User> allUsers();
 
     User getById(int id);
 
+    User updateUser(User user);
+    
     String deleteById(int id);
 
-    List<User> allUsers();
+
 }

@@ -18,9 +18,9 @@ public class UserController {
         return userRepository.saveUser(user);
     }
 
-    @PutMapping("/{id}")
-    public User updateUser(@RequestBody User user) {
-        return userRepository.updateUser(user);
+    @GetMapping()
+    public List<User> getUsers() {
+        return userRepository.allUsers();
     }
 
     @GetMapping("/{id}")
@@ -28,14 +28,13 @@ public class UserController {
         return userRepository.getById(id);
     }
 
-    @GetMapping()
-    public List<User> getUsers() {
-        return userRepository.allUsers();
+    @PutMapping("/{id}")
+    public User updateUser(@RequestBody User user) {
+        return userRepository.updateUser(user);
     }
 
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable("id") int id) {
         return userRepository.deleteById(id);
     }
-
 }
